@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banco de Karen</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+
+</head>
+<body>
+    <div id="app">
+        <!--Titulo con mayuscula con clases computadas-->
+        <h1>{{mayusculas}}</h1>
+         <!--Cambiando los atributos de bootstrap con clases dinamicas -->
+        <h2 class="bg-dark"
+        :class="[cantidad > 500 ? 'text-success': 'text-danger']"
+        >Dinamico: Mi saldo disponible es: {{cantidad}}</h2>
+        <!--Cambiando los atributos de bootstrap con clases computadas-->
+        <h2 class="bg-dark"
+        :class="colorCantidad"
+        >Computado: Mi saldo disponible es: {{cantidad}}</h2>
+        <!-- usando v-bind para atar dinamicamente un atributo html y una expresion vue-->
+        <a v-bind:href="enlace">Ir a enlace</a>
+        <a :href="enlace">ir al enlace</a>
+        <h2 v-if="estado">Cuenta activada</h2>
+        <h2 v-else>Cuenta desactivada</h2>
+        <hr>
+        <h2 v-if="cantidad > 500"> Cantidad: {{cantidad}}</h2>
+        <h2 v-else-if=" cantidad <= 500 && cantidad > 0 ">
+            cantidad: 
+            <span style="color:red " >{{cantidad}}</span>
+        </h2>
+        <h2 v-else>Sin cantidad {{cantidad}}</h2>
+        <hr>
+        <h2>Mis servicios disponibles</h2>
+        <ul>
+            <li v-for="(item, index) in servicios":key="index">{{index+1}} - {{item}}</li>
+        </ul>
+
+        <hr>
+        <button @click="restarSaldo(100)" :disabled="desactivar">Retirar saldo</button>
+        
+       
+
+        <button v-on:click="agregarSaldo">Agregar saldo</button>
+        <!--Agregando un foter a la pagina con los componentes que se encuentran en la carpeta components-->
+        <!--La etiqueta se nombra dependiendo del nombre que se declaro en el archivo-->
+        <!--enviando cantidad con props a footer.js-->
+        <footer-banco valor="700"></footer-banco>
+        <footer-banco :valor="cantidad"/>
+    </div>
+    <script src="main.js"></script>
+    <!--Los componentes simpre deben de ir despues del main.js y antes del mountedApp-->
+    <script src="components/Footer.js"></script>
+    <script>
+        const mountedApp= app.mount('#app');
+    </script>
+    
+</body>
+</html>
